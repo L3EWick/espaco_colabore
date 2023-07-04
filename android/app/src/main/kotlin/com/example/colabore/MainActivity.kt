@@ -1,0 +1,6 @@
+package com.example.colabore
+
+import io.flutter.embedding.android.FlutterActivity
+
+class MainActivity: FlutterActivity() {
+}
