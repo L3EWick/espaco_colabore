@@ -7,7 +7,7 @@ import 'package:colabore/screens/utils/alert.dart';
 import 'package:colabore/screens/utils/nav.dart';
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
-
+ 
   @override
   _LoginPageState createState() => _LoginPageState();
 }
@@ -34,7 +34,7 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
         appBar: AppBar(
             centerTitle: true,
-            title: Text("Colabore"),
+            title: Text("Espaço Colabore"),
             backgroundColor: Colors.deepPurple[800]),
         body: Container(
             padding: EdgeInsets.all(16),
@@ -98,7 +98,9 @@ class _LoginPageState extends State<LoginPage> {
                             style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.deepPurple[900],
                                 fixedSize: const Size(240, 46),
-                                textStyle: const TextStyle(fontSize: 22)),
+                                textStyle: const TextStyle(fontSize: 22),
+                                ),
+                               
                             child: Text('Login'),
                           ),
                         )
