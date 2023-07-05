@@ -1,8 +1,10 @@
 import 'package:colabore/screens/home_page.dart';
 import 'package:flutter/material.dart';
-import 'package:form_builder_image_picker/form_builder_image_picker.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 import 'package:colabore/screens/utils/url.dart';
+// import 'dart:convert';
+// import 'dart:io';
 
 class FormScreen extends StatefulWidget {
   const FormScreen({super.key});
@@ -11,13 +13,20 @@ class FormScreen extends StatefulWidget {
   State<FormScreen> createState() => _FormScreenState();
 }
 
+
 class _FormScreenState extends State<FormScreen> {
  TextEditingController _tNome      = TextEditingController();
  TextEditingController _tIdade      = TextEditingController();
  TextEditingController _tProfissao  = TextEditingController();
  TextEditingController _tFinalidade = TextEditingController();
 
+
+  
+
+
 postData() async {
+
+
   var response = await http.post(
     Uri.parse("http://$link/api/form"),
     body: {
@@ -25,6 +34,7 @@ postData() async {
       "idade": _tIdade.text,
       "profissao": _tProfissao.text,
       "finalidade": _tFinalidade.text,
+      "photo" : ""
     },
   );
     print(response.body);
@@ -99,12 +109,23 @@ postData() async {
                   ),
               ),
               SizedBox(
+                height: 30,
+              ),
+              Text(
+                "Foto do Munícipe ",
+                textAlign: TextAlign.center,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                ),
+              ),
+               SizedBox(
                 height: 10,
               ),
-              FormBuilderImagePicker(
-                name: 'photos',
-                decoration: const InputDecoration(labelText: 'Fotos do Munícipe'),
-                maxImages: 1,
+              ElevatedButton(
+                onPressed: (){}, 
+                child: Icon(Icons.add),
               ),
               const SizedBox(
                 height: 30,
