@@ -1,6 +1,6 @@
 
 
 //teste local
-var link = "http://172.19.0.157:8000";
+// var link = "172.19.0.157";
 
-// var link = "bci.mesquita.rj.gov.br";
+var link = "colabore.mesquita.rj.gov.br";

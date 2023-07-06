@@ -35,7 +35,7 @@ dependencies:
   path: ^1.8.0
   image_picker: ^0.8.7+4
   form_builder_image_picker: ^4.0.0
-  dio: ^4.0.0
+  flutter_native_splash: ^1.0.0
 
 
 
@@ -69,7 +69,7 @@ flutter:
   assets:
     - assets/img/logo.png
     - assets/img/mesquita_360.png
-
+    - assets/img/no_user.jpg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 
@@ -95,3 +95,5 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+flutter_native_splash:
+ image: assets/splash_image.png

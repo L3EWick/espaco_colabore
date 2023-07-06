@@ -14,7 +14,7 @@ class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
 
   static final List<Widget> _widgetOptions = <Widget>[
-    const FormViewScreen(),
+    const DataScreen(),
     const FormScreen(),
   ];
 

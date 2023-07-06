@@ -4,7 +4,7 @@ import 'package:colabore/screens/utils/url.dart';
 
 class Service {
 Future<bool> addImage(Map<String, String> body, String filepath) async {
-    String addimageUrl = '$link/api/form';
+    String addimageUrl = 'http://$link/api/form';
     Map<String, String> headers = {
       'Content-Type': 'multipart/form-data',
     };
