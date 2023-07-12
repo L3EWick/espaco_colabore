@@ -3,6 +3,7 @@ import 'package:colabore/screens/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:colabore/services.dart';
+import 'package:intl/intl.dart';
 
 class FormScreen extends StatefulWidget {
   const FormScreen({Key? key}) : super(key: key);
@@ -16,14 +17,22 @@ class _FormScreenState extends State<FormScreen> {
   final _addFormKey = GlobalKey<FormState>();
 
   TextEditingController _tNome = TextEditingController();
-  TextEditingController _tIdade = TextEditingController();
   TextEditingController _tProfissao = TextEditingController();
   TextEditingController _tFinalidade = TextEditingController();
 
   XFile? _image;
   final picker = ImagePicker();
 
+  DateTime _selectedDate = DateTime.now();
+  late String _formattedDate;
+
   bool _isLoading = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _formattedDate = DateFormat('dd/MM/yyyy').format(_selectedDate);
+  }
 
   Widget _buildImage() {
     if (_image == null) {
@@ -52,6 +61,22 @@ class _FormScreenState extends State<FormScreen> {
     });
   }
 
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(1900),
+      lastDate: DateTime.now(),
+    );
+
+    if (picked != null) {
+      setState(() {
+        _selectedDate = picked;
+        _formattedDate = DateFormat('dd/MM/yyyy').format(_selectedDate);
+      });
+    }
+  }
+
   Future<void> _submitForm() async {
     if (_addFormKey.currentState!.validate()) {
       _addFormKey.currentState!.save();
@@ -60,7 +85,7 @@ class _FormScreenState extends State<FormScreen> {
       });
       Map<String, String> body = {
         'nome': _tNome.text,
-        'idade': _tIdade.text,
+        'idade': _calculateAge(_selectedDate).toString(),
         'profissao': _tProfissao.text,
         'finalidade': _tFinalidade.text,
       };
@@ -73,6 +98,17 @@ class _FormScreenState extends State<FormScreen> {
         MaterialPageRoute(builder: (context) => HomeScreen()),
       );
     }
+  }
+  
+
+  int _calculateAge(DateTime selectedDate) {
+    final now = DateTime.now();
+    int age = now.year - selectedDate.year;
+    if (now.month < selectedDate.month ||
+        (now.month == selectedDate.month && now.day < selectedDate.day)) {
+      age--;
+    }
+    return age;
   }
 
   @override
@@ -115,13 +151,19 @@ class _FormScreenState extends State<FormScreen> {
                       SizedBox(
                         height: 10,
                       ),
-                      TextFormField(
-                        controller: _tIdade,
-                        keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
-                          labelText: "Idade",
-                          hintText: "Idade",
-                          icon: Icon(Icons.add_box_rounded),
+                      GestureDetector(
+                        onTap: () => _selectDate(context),
+                        child: AbsorbPointer(
+                          child: TextFormField(
+                            decoration: InputDecoration(
+                              labelText: "Data de Nascimento",
+                              hintText: "Data de Nascimento",
+                              icon: Icon(Icons.calendar_today),
+                            ),
+                            controller: TextEditingController(
+                              text: _formattedDate,
+                            ),
+                          ),
                         ),
                       ),
                       SizedBox(

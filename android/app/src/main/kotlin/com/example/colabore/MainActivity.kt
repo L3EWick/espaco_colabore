@@ -1,4 +1,4 @@
-package com.example.colabore
+package com.colabore
 
 import io.flutter.embedding.android.FlutterActivity
 
