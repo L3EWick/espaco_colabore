@@ -39,6 +39,7 @@ dependencies:
   flutter_datetime_picker: ^1.0.0
   flutter_localizations:
     sdk: flutter
+  intl: any
 
 
 

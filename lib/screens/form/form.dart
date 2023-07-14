@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:colabore/screens/home_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart'; // Import adicionado
 import 'package:image_picker/image_picker.dart';
 import 'package:colabore/services.dart';
 import 'package:intl/intl.dart';
@@ -15,6 +16,7 @@ class FormScreen extends StatefulWidget {
 class _FormScreenState extends State<FormScreen> {
   Service service = Service();
   final _addFormKey = GlobalKey<FormState>();
+  
 
   TextEditingController _tNome = TextEditingController();
   TextEditingController _tProfissao = TextEditingController();
@@ -52,18 +54,44 @@ class _FormScreenState extends State<FormScreen> {
 
   Future getImage() async {
     final pickedFile = await picker.getImage(source: ImageSource.camera);
-    setState(() {
-      if (pickedFile != null) {
-        _image = XFile(pickedFile.path);
-      } else {
-        print('No image selected.');
-      }
-    });
+    if (pickedFile != null) {
+      // Exibir diálogo de confirmação
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return CupertinoAlertDialog(
+            title: Text('Confirmar'),
+            content: Text('Deseja usar esta imagem?'),
+            actions: <Widget>[
+              CupertinoDialogAction(
+                child: Text('Cancelar'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              CupertinoDialogAction(
+                child: Text('Confirmar'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  setState(() {
+                    _image = XFile(pickedFile.path);
+                  });
+                },
+              ),
+            ],
+          );
+        },
+      );
+    } else {
+      print('No image selected.');
+    }
   }
+
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
+      locale: Locale('pt'),
       initialDate: DateTime.now(),
       firstDate: DateTime(1900),
       lastDate: DateTime.now(),

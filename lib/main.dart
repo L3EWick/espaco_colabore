@@ -1,6 +1,7 @@
 import 'package:colabore/screens/home_page.dart';
 import 'package:colabore/screens/login/login_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,6 +19,14 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.deepPurple,
         scaffoldBackgroundColor: Colors.white,
       ),
+      localizationsDelegates: [
+    GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: [
+        Locale('pt'), // pt br
+      ],
       initialRoute: '/',
       routes: {
         '/': (context) => LoginPage(),
