@@ -158,14 +158,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.5.1"
-  flutter_form_builder:
-    dependency: transitive
-    description:
-      name: flutter_form_builder
-      sha256: "9b098f6a5f8a6381016a5fe9cdccc900683917d1fb930e1c6c6c051ca0f01f08"
-      url: "https://pub.dev"
-    source: hosted
-    version: "9.0.0"
   flutter_lints:
     dependency: "direct dev"
     description:
@@ -205,14 +197,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  form_builder_image_picker:
-    dependency: "direct main"
-    description:
-      name: form_builder_image_picker
-      sha256: d3920ba0472db8d66a96ab49d9103eb7c60699451e9d3674f24657cf87e2019d
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.0.0"
   http:
     dependency: "direct main"
     description:
@@ -241,10 +225,10 @@ packages:
     dependency: "direct main"
     description:
       name: image_picker
-      sha256: b6951e25b795d053a6ba03af5f710069c99349de9341af95155d52665cb4607c
+      sha256: "6296e98782726d37f59663f0727d0e978eee1ced1ffed45ccaba591786a7f7b3"
       url: "https://pub.dev"
     source: hosted
-    version: "0.8.9"
+    version: "1.0.1"
   image_picker_android:
     dependency: transitive
     description:
@@ -596,4 +580,4 @@ packages:
     version: "3.1.2"
 sdks:
   dart: ">=3.0.5 <4.0.0"
-  flutter: ">=3.10.0"
+  flutter: ">=3.3.0"

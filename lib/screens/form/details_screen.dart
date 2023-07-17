@@ -24,14 +24,18 @@ class DetailsScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
+                Stack(
                   alignment: Alignment.center,
-                  child: CircleAvatar(
-                    radius: 60,
-                    backgroundImage: data['photo'] != null
-                        ? NetworkImage('http://$link/storage/municipe/${data['photo']}')
-                        : AssetImage('assets/default_avatar.png') as ImageProvider,
-                  ),
+                  children: [
+                    CircularProgressIndicator(),
+                    CircleAvatar(
+                      radius: 60,
+                      backgroundColor: Colors.grey,
+                      backgroundImage: data['photo'] != null
+                          ? NetworkImage('http://$link/storage/municipe/${data['photo']}')
+                          : null,
+                    ),
+                  ],
                 ),
                 SizedBox(height: 16),
                 Text(
