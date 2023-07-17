@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:colabore/screens/home_page.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart'; // Import adicionado
 import 'package:image_picker/image_picker.dart';
 import 'package:colabore/services.dart';
 import 'package:intl/intl.dart';
@@ -16,7 +15,6 @@ class FormScreen extends StatefulWidget {
 class _FormScreenState extends State<FormScreen> {
   Service service = Service();
   final _addFormKey = GlobalKey<FormState>();
-  
 
   TextEditingController _tNome = TextEditingController();
   TextEditingController _tProfissao = TextEditingController();
@@ -33,7 +31,7 @@ class _FormScreenState extends State<FormScreen> {
   @override
   void initState() {
     super.initState();
-    _formattedDate = DateFormat('dd/MM/yyyy').format(_selectedDate);
+    _formattedDate = 'Informe sua data de nascimento';
   }
 
   Widget _buildImage() {
@@ -55,46 +53,48 @@ class _FormScreenState extends State<FormScreen> {
   Future getImage() async {
     final pickedFile = await picker.pickImage(source: ImageSource.camera);
     if (pickedFile != null) {
-      // Exibir diálogo de confirmação
-      showDialog(
+      bool confirm = await showDialog(
         context: context,
         builder: (BuildContext context) {
-          return CupertinoAlertDialog(
+          return AlertDialog(
             title: Text('Confirmar'),
             content: Text('Deseja usar esta imagem?'),
             actions: <Widget>[
-              CupertinoDialogAction(
+              TextButton(
                 child: Text('Cancelar'),
                 onPressed: () {
-                  Navigator.of(context).pop();
+                  Navigator.of(context).pop(false);
                 },
               ),
-              CupertinoDialogAction(
+              TextButton(
                 child: Text('Confirmar'),
                 onPressed: () {
-                  Navigator.of(context).pop();
-                  setState(() {
-                    _image = XFile(pickedFile.path);
-                  });
+                  Navigator.of(context).pop(true);
                 },
               ),
             ],
           );
         },
       );
+      if (confirm) {
+        setState(() {
+          _image = XFile(pickedFile.path);
+        });
+      }
     } else {
       print('No image selected.');
     }
   }
 
-
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
       locale: Locale('pt'),
+      initialDatePickerMode: DatePickerMode.year,
       initialDate: DateTime.now(),
       firstDate: DateTime(1900),
       lastDate: DateTime.now(),
+      helpText: 'Informe sua data de nascimento',
     );
 
     if (picked != null) {
@@ -105,8 +105,36 @@ class _FormScreenState extends State<FormScreen> {
     }
   }
 
+  String? _validateText(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Campo obrigatório';
+    }
+    return null;
+  }
+
   Future<void> _submitForm() async {
     if (_addFormKey.currentState!.validate()) {
+      if (_image == null) {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('Erro'),
+              content: Text('Selecione uma foto'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text('OK'),
+                ),
+              ],
+            );
+          },
+        );
+        return;
+      }
+
       _addFormKey.currentState!.save();
       setState(() {
         _isLoading = true;
@@ -127,7 +155,6 @@ class _FormScreenState extends State<FormScreen> {
       );
     }
   }
-  
 
   int _calculateAge(DateTime selectedDate) {
     final now = DateTime.now();
@@ -175,6 +202,7 @@ class _FormScreenState extends State<FormScreen> {
                           hintText: "Nome",
                           icon: Icon(Icons.supervisor_account_sharp),
                         ),
+                        validator: _validateText,
                       ),
                       SizedBox(
                         height: 10,
@@ -191,6 +219,7 @@ class _FormScreenState extends State<FormScreen> {
                             controller: TextEditingController(
                               text: _formattedDate,
                             ),
+                            validator: _validateText,
                           ),
                         ),
                       ),
@@ -204,6 +233,7 @@ class _FormScreenState extends State<FormScreen> {
                           hintText: "Profissão",
                           icon: Icon(Icons.adjust),
                         ),
+                        validator: _validateText,
                       ),
                       SizedBox(
                         height: 10,
@@ -215,6 +245,7 @@ class _FormScreenState extends State<FormScreen> {
                           hintText: "Finalidade de Acesso",
                           icon: Icon(Icons.apartment_sharp),
                         ),
+                        validator: _validateText,
                       ),
                       SizedBox(
                         height: 30,

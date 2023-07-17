@@ -138,6 +138,7 @@ class _LoginPageState extends State<LoginPage> {
 
     ApiResponse response = await LoginApi.login(login, senha);
     if (response.ok) {
+      // ignore: unused_local_variable
       Usuario user = response.result;
       push(context, HomeScreen(), replace: true);
     } else {
