@@ -29,6 +29,7 @@ class _DataScreenState extends State<DataScreen> {
         dataList = decodedData.map((data) {
           return {
             'nome': data['nome'],
+            'telefone': data['telefone'],
             'idade': data['idade'],
             'profissao': data['profissao'],
             'finalidade': data['finalidade'],
@@ -68,7 +69,7 @@ class _DataScreenState extends State<DataScreen> {
                       elevation: 4.0,
                       child: ListTile(
                         title: Text('Nome: ${data['nome']}'),
-                        subtitle: Text('Idade: ${data['idade']}'),
+                        subtitle: Text('Telefone: ${data['telefone']}'),
                         leading: CircleAvatar(
                           backgroundImage: data['photo'] != null
                               ? NetworkImage(

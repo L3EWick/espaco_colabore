@@ -39,6 +39,9 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   intl: any
+  webview_flutter: ^4.2.2
+  extended_masked_text: ^2.3.1
+
 
   
 

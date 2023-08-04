@@ -11,8 +11,8 @@ if (flutterRoot == null) {
     throw new GradleException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file.")
 }
 
-def flutterVersionCode = '3'
-def flutterVersionName = '1.2.1'
+def flutterVersionCode = '5'
+def flutterVersionName = '1.6.0'
 
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
@@ -47,8 +47,8 @@ android {
         applicationId "com.colabore"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
-        minSdkVersion flutter.minSdkVersion
-        targetSdkVersion flutter.targetSdkVersion
+        minSdkVersion 19 //*** This is the part that needs to be changed, previously was 16
+        targetSdkVersion 33
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }

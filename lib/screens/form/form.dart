@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:colabore/services.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:extended_masked_text/extended_masked_text.dart';
 
 class FormScreen extends StatefulWidget {
   const FormScreen({Key? key}) : super(key: key);
@@ -19,6 +21,8 @@ class _FormScreenState extends State<FormScreen> {
   TextEditingController _tNome = TextEditingController();
   TextEditingController _tProfissao = TextEditingController();
   TextEditingController _tFinalidade = TextEditingController();
+  TextEditingController _tTelefone = MaskedTextController(mask: '(00) 00000-0000');
+
 
   XFile? _image;
   final picker = ImagePicker();
@@ -139,11 +143,17 @@ class _FormScreenState extends State<FormScreen> {
       setState(() {
         _isLoading = true;
       });
+
+         SharedPreferences prefs = await SharedPreferences.getInstance();
+      int user_id = prefs.getInt('id') ?? 0;
+
       Map<String, String> body = {
         'nome': _tNome.text,
-        'idade': _calculateAge(_selectedDate).toString(),
+        'telefone': _tTelefone.text,
+        'idade': _formattedDate.toString(),
         'profissao': _tProfissao.text,
         'finalidade': _tFinalidade.text,
+        'user_id': user_id.toString(),
       };
       await service.addImage(body, _image!.path);
       setState(() {
@@ -204,6 +214,19 @@ class _FormScreenState extends State<FormScreen> {
                         ),
                         validator: _validateText,
                       ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      TextFormField(
+                        controller: _tTelefone,
+                        decoration: InputDecoration(
+                          labelText: "Telefone",
+                          hintText: "Telefone",
+                          icon: Icon(Icons.phone),
+                        ),
+                        validator: _validateText,
+                      ),
+
                       SizedBox(
                         height: 10,
                       ),

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:colabore/screens/home_page.dart';
 import 'package:colabore/screens/login/login_page.dart';
 import 'dart:async';
+import 'package:colabore/screens/login/secret_page.dart';
 
 class DrawerList extends StatelessWidget {
   
@@ -49,16 +50,17 @@ class DrawerList extends StatelessWidget {
               trailing: const Icon(Icons.home),
               onTap: () => _onClickChangeHome(context),
             ),
-          // ListTile(
-          //     title: const Text("Trocar senha"),
-          //     trailing: const Icon(Icons.lock),
-          //     onTap: () => _onClickChange(context),
-          //   ),
+          
             ListTile(
               title: const Text("Sair"),
               trailing: const Icon(Icons.exit_to_app),
               onTap: () => _onClickLogout(context),
-            )
+            ),
+          
+            ListTile(
+              title: const Text(""),
+              onTap: () => _onClickChange(context),
+            ),
           ],
         ),
       ),
@@ -69,10 +71,10 @@ _onClickChangeHome(BuildContext context) {
   Navigator.pop(context);
   push(context, const HomeScreen(), replace: true);
 }
-// _onClickChange(BuildContext context) {
-//   Navigator.pop(context);
-//   push(context, const ResetPage(), replace: true);
-// }
+_onClickChange(BuildContext context) {
+  Navigator.pop(context);
+  push(context, const SecretPage(), replace: true);
+}
 _onClickLogout(BuildContext context) {
   Usuario.clear();
   Navigator.pop(context);

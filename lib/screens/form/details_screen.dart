@@ -42,6 +42,11 @@ class DetailsScreen extends StatelessWidget {
                   'Nome: ${data['nome'] ?? ''}',
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
+                 SizedBox(height: 16),
+                Text(
+                  'Telefone: ${data['telefone'] ?? ''}',
+                  style: TextStyle(fontSize: 18, ),
+                ),
                 SizedBox(height: 16),
                 Text(
                   'Idade: ${data['idade'] ?? ''}',

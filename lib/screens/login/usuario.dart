@@ -50,6 +50,6 @@ class Usuario {
 
   @override
   String toString() {
-    return 'Usuario{email: $email, name: $nome, token $token}';
+    return 'Usuario{email: $email, name: $nome, token $token, id: $id}';
   }
 }
